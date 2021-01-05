@@ -1,0 +1,12 @@
+TASK-1:-HLD and LLD(High level design Document and low level design Document )
+HLD:- HLD is the overall system design - covering the system architecture and database design. 
+It describes the relation between various modules and functions of the system. data flow, flow charts and data structures are covered under HLD
+Q1.SDLC(Software Development Life Cycle)
+Q2.shallow copy and deep copy
+Q3.closure
+Q4.how to multi threading in node js
+Q5 five difference in let, var and const
+Q6. can be change the properties of object which is assign with const
+Q7.example of  anonymous function 
+Q8.what is event loop 
+9.SRS(software requirements specification)
