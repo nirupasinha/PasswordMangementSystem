@@ -30,6 +30,10 @@ let SomeModelSchema = new userSchema({
         // enum: ["user", "admin", "superAdmin"]
     },
     password: { type: String, required: true },
+    resetLink: {
+        data: String,
+        default: ''
+    },
     address: [{
         type: mongoose.Schema.Types.ObjectId,
         ref: "addressModel"

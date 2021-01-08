@@ -19,7 +19,7 @@ module.exports = {
             Model.findOne({ email: userObject.email }, function(err, dbData) {
                 if (!err) {
                     resolve(dbData)
-                    console.log("check mail", dbData);
+                        //  console.log("check mail", dbData);
                 } else {
                     reject(err)
                 }
@@ -70,12 +70,12 @@ module.exports = {
             Model.findOneAndUpdate(filter, newUserObject, { new: true }, (err, dbData) => {
                 console.log("data after find method", dbData);
                 console.log("error after find method", err);
-                if (!err) {
-                    resolve(dbData)
-                    console.log("update profile details", dbData);
+                if (!err && dbData) {
+                    return resolve(dbData)
+                        //  console.log("update profile details", dbData);
                 } else {
-                    reject(err)
-                    console.log("error in update profile", err);
+                    return reject(err)
+                        // console.log("error in update profile", err);
                 }
             })
         })

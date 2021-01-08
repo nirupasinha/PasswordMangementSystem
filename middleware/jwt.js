@@ -36,7 +36,7 @@ function verifyJWTToken(req, res, next) {
     })
 }
 //create jwt for forgot password
-function createJWTTokenForgot(emailId) {
+function createForgotPassToken(emailId) {
     return new Promise(function(resolve, reject) {
         jwt.sign({ email: emailId }, RESET_PASSWORD_KEY, {
             expiresIn: "1d"
@@ -49,4 +49,24 @@ function createJWTTokenForgot(emailId) {
         })
     })
 }
-module.exports = { createJWTToken, verifyJWTToken }
+
+function verifyForgotPassToken(req, res, next) {
+    const token = req.headers.authorization;
+    console.log("token from postman", token)
+    return new Promise(function(resolve, reject) {
+        jwt.verify(token, RESET_PASSWORD_KEY, function(err, decoded) {
+            if (!err) {
+                req.userEmail = decoded.email;
+                req.userRole = decoded.role;
+                console.log("user email in jwt", req.userDetails);
+                resolve(token)
+                console.log("token decoded", decoded);
+                next(); //after middleware execution go to next level(controller)
+            } else {
+                let message = `token is not found`;
+                return handler.responseHandler(res, 500, message, err);
+            }
+        });
+    })
+}
+module.exports = { createJWTToken, verifyJWTToken, createForgotPassToken, verifyForgotPassToken }
