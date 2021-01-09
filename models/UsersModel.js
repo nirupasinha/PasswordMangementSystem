@@ -34,6 +34,12 @@ let SomeModelSchema = new userSchema({
         data: String,
         default: ''
     },
+    profilePassword: [{
+            type: mongoose.Schema.Types.ObjectId,
+            ref: "passModel"
+        }
+
+    ],
     address: [{
         type: mongoose.Schema.Types.ObjectId,
         ref: "addressModel"

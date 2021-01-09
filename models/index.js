@@ -1,3 +1,4 @@
 module.exports = {
-    User: require("./UsersModel")
+    User: require("./UsersModel"),
+    Password: require("./passModel")
 }

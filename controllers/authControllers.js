@@ -9,6 +9,7 @@ module.exports = {
     signup: (req, res) => {
         const userObject = req.body;
         const errors = validationResult(req);
+        const emailId = userObject.email;
         console.log(errors);
         db.checkEmail(User, userObject).then(function successResponse(dbData) {
             if (!dbData) {
@@ -21,12 +22,12 @@ module.exports = {
                         db.insertDocument(User, userObject).then(function successResponse(dbData) {
                             let mailOptions = {
                                 from: 'nirupasinha99@gmail.com',
-                                to: usermail,
+                                to: emailId,
                                 subject: 'Password Management System',
                                 text: `Your Registration is Done .`
 
                             };
-                            sendEmail(userObject.email, mailOptions)
+                            sendEmail(mailOptions)
                             const message = "Users  Registered Successfully";
                             responseHandler(res, 200, message, null, dbData)
                         }).catch(function errorResponse(err) {
@@ -50,7 +51,9 @@ module.exports = {
     login: (req, res) => {
         const userObject = req.body;
         const emailId = userObject.email;
+        console.log("user data from postman", userObject, emailId)
         db.getUserLoginDetails(User, userObject).then(function successResponse(dbData) {
+            console.log("data after get method in controller", dbData)
             bcrypt.comparePassword(userObject.password, dbData.password, function(err, passwordMatched) {
                 if (err) {
                     return responseHandler(res, 500, "bcrypt error", err);
