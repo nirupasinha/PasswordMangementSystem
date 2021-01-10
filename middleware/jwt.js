@@ -24,7 +24,7 @@ function verifyJWTToken(req, res, next) {
     return new Promise(function(resolve, reject) {
         jwt.verify(token, JWT_PRIVATE_KEY, function(err, decoded) {
             if (!err) {
-                req.userDetails = decoded.email;
+                req.userMail = decoded.email;
                 req.userRole = decoded.role;
                 resolve(token)
                 next();

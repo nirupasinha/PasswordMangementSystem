@@ -1,4 +1,4 @@
 module.exports = {
     auth: require("./authControllers"),
-    password: require("./passControllers")
+    password: require("./vaultDataControllers")
 }

@@ -13,3 +13,14 @@ Module:-
    3).Banking Profile(SBI Banking, HDFC NET Banking, Atm pin..)
 4.Manage password like:Edit,Delete,view
 5.Add Nominee of users 
+Nominee Details(Model):-
+   Name
+   Gender
+   Phone
+   email
+   Nominee Relation
+   Rank/priority of Nominee[ choose from three option:1st, 2nd 3rd]/allocation in percentage from 100 minium three nominee required this section is editable according user preference
+   Date of Birth/Age
+   Signature
+   Identity Documents(minimum required one from voter id , pan, aadhar card)
+   Address
