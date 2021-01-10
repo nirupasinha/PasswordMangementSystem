@@ -1,0 +1,26 @@
+Password Management System 
+Module:-
+1.Register user(send mail only -> next version to Send Mail  user to confirmation )
+  a).forgot password(using to routs->next version to using html template)
+  b).Edit users details
+  c).view users details
+  d).Delete users profile(next version->deactivate account)
+  e).Reset Password
+2.Login User
+3.Password:-Category Like-
+   1).Software Passwords(Godaddy Password, Wordpress),
+   2). Social Profile(Facebook,Twitter,...), 
+   3).Banking Profile(SBI Banking, HDFC NET Banking, Atm pin..)
+4.Manage password like:Edit,Delete,view
+5.Add Nominee of users 
+Nominee Details(Model):-
+   Name
+   Gender
+   Phone
+   email
+   Nominee Relation
+   Rank/priority of Nominee[ choose from three option:1st, 2nd 3rd]/allocation in percentage from 100 minium three nominee required this section is editable according user preference
+   Date of Birth/Age
+   Signature
+   Identity Documents(minimum required one from voter id , pan, aadhar card)
+   Address
