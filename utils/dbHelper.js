@@ -58,9 +58,9 @@ module.exports = {
                 if (err) {
                     reject(err)
                 } else {
-                    resolve(dbData)
+                    resolve(dbData) //.populate('vaultDataModel', 'nomineeModel')
                 }
-            })
+            }).populate('vaultData').populate('nominee')
         })
     },
     updateProfile: (Model, filter, update) => {

@@ -34,18 +34,16 @@ let userSchema = new mongoose.Schema({
         default: ''
     },
     vaultData: [{
-            type: mongoose.Schema.Types.ObjectId,
-            ref: "vaultDataModel"
-        }
-
-    ],
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "VaultDataModel"
+    }],
     address: [{
         type: mongoose.Schema.Types.ObjectId,
-        ref: "addressModel"
+        ref: "AddressModel"
     }],
     nominee: [{
         type: mongoose.Schema.Types.ObjectId,
-        ref: "nomineeModel"
+        ref: "NomineeModel"
     }]
 })
 
