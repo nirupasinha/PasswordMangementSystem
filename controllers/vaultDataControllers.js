@@ -2,7 +2,6 @@ const { VaultData, User } = require("../models");
 const db = require("../utils/dbHelper")
 const { responseHandler } = require("../utils/responseHandler")
 const Cryptr = require('cryptr');
-const { StandardValidation } = require("express-validator/src/context-items");
 const cryptr = new Cryptr('PMS_Password_SECRET_KEY');
 module.exports = {
     insert: (req, res) => {
