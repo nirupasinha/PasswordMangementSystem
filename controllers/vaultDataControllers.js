@@ -2,6 +2,7 @@ const { VaultData, User } = require("../models");
 const db = require("../utils/dbHelper")
 const { responseHandler } = require("../utils/responseHandler")
 const Cryptr = require('cryptr');
+const { StandardValidation } = require("express-validator/src/context-items");
 const cryptr = new Cryptr('PMS_Password_SECRET_KEY');
 module.exports = {
     insert: (req, res) => {
@@ -9,6 +10,7 @@ module.exports = {
         let password = userObject.profilePassword;
         let encryptedPassword = cryptr.encrypt(password);
         userObject.profilePassword = encryptedPassword;
+
         let emailId = req.userMail; //this come from jwt.js file after verify jwt token 
         db.insertDocument(VaultData, userObject).then(function successResponse(dbData) {
             if (dbData !== null) {
@@ -93,12 +95,21 @@ module.exports = {
             }
             let passFilter = { "_id": { "$in": dbData[0].vaultData } }
             db.getUserDetails(VaultData, passFilter).then(function successResponse(dbData) {
+                console.log(dbData);
                 if (!dbData) {
                     message = `error in getting User password Details`;
                     return responseHandler(res, 404, message, err)
                 }
+                dbData.forEach(function(elem, i) {
+                    if (!elem.profilePassword) {
+                        throw ("profilePassword not found")
+                    }
+                    let decryptedPassword = cryptr.decrypt(elem.profilePassword);
+                    dbData[i].profilePassword = decryptedPassword;
+                })
                 message = `get User password Details`;
                 return responseHandler(res, 200, message, null, dbData)
+
             }).catch(function errorResponse(err) {
                 message = `error in getting user password details`;
                 return responseHandler(res, 400, message, err)
