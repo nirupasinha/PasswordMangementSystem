@@ -125,6 +125,7 @@ module.exports = {
                     message = `error in getting User password Details`;
                     return responseHandler(res, 404, message, err)
                 }
+                let arr = [];
                 dbData.forEach(function(elem) {
                     if (!elem.email) {
                         throw ("profilePassword not found")
@@ -134,15 +135,20 @@ module.exports = {
                         max: 1000,
                         integer: true
                     }
+                    let otp = rn(options);
                     let mailOptions = {
                         from: 'nirupasinha99@gmail.com',
                         to: elem.email,
                         subject: 'Password Reset Link',
                         html: `<h2>Please click on given link to reset your password</h2>
-                <p>Reset password OTP (valid only for 24hrs):- ${rn(options)}</p>`
+                <p>Reset password OTP (valid only for 24hrs):- ${otp}</p>`
                     };
                     sendEmail(mailOptions)
+                    arr.push({ otp, email: elem.email })
+
                 })
+                console.log("otp array ", arr); //
+                db.updateProfile(User, filter, { OTP: arr })
                 message = `Send OTP Successfully To all Nominees!!!!`;
                 return responseHandler(res, 200, message, null, dbData)
 
@@ -156,5 +162,8 @@ module.exports = {
             return responseHandler(res, 400, message, err)
         })
     },
+    verifyOTP: (req, res) => {
+
+    }
 
 }

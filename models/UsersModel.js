@@ -44,7 +44,8 @@ let userSchema = new mongoose.Schema({
     nominee: [{
         type: mongoose.Schema.Types.ObjectId,
         ref: "NomineeModel"
-    }]
+    }],
+    OTP: [{}]
 })
 
 let UserModel = mongoose.model('UserModel', userSchema);

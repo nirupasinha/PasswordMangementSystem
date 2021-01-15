@@ -8,5 +8,6 @@ router.post('/add-nominee', verifyJWTToken, controller.nominee.insert);
 router.post('/update-nominee', verifyJWTToken, controller.nominee.update);
 router.post('/view-nominee', verifyJWTToken, controller.nominee.view);
 router.post('/send-mail', controller.nominee.sendMail);
+router.post('/verify-otp', controller.nominee.verifyOTP);
 //router.post('/delete-nominee', verifyJWTToken, controller.nominee.update);
 module.exports = router;
