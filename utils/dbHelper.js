@@ -42,14 +42,13 @@ module.exports = {
     },
     getUserLoginDetails: (Model, userObject) => {
         return new Promise(function(resolve, reject) {
-            Model.findOne({ email: userObject.email },
-                (err, dbData) => {
-                    if (err) {
-                        reject(err)
-                    } else {
-                        resolve(dbData)
-                    }
-                })
+            Model.findOne({ email: userObject.email }, (err, dbData) => {
+                if (err) {
+                    reject(err)
+                } else {
+                    resolve(dbData)
+                }
+            })
         })
     },
     getUserDetails: (Model, filter) => {
@@ -58,9 +57,9 @@ module.exports = {
                 if (err) {
                     reject(err)
                 } else {
-                    resolve(dbData)
+                    resolve(dbData) //.populate('vaultDataModel', 'nomineeModel')
                 }
-            })
+            }).populate('vaultData').populate('nominee')
         })
     },
     updateProfile: (Model, filter, update) => {

@@ -18,15 +18,14 @@ let nomineeSchema = new mongoose.Schema({
     },
     relation: {
         type: String,
-        default: "user",
         required: true,
     },
     age: {
         type: Number
     },
-    address: {
+    address: [{
         type: String
-    }
+    }]
 })
 
 let NomineeModel = mongoose.model('NomineeModel', nomineeSchema);

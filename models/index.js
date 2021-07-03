@@ -1,4 +1,5 @@
 module.exports = {
     User: require("./UsersModel"),
-    VaultData: require("./vaultDataModel")
+    VaultData: require("./vaultDataModel"),
+    Nominee: require("./nomineeModel")
 }

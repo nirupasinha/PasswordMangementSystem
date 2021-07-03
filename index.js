@@ -15,6 +15,7 @@
   app.use(bodyParser.urlencoded({ extended: true }), );
   routes.appRoutes(app);
 
+
   //Spinning server to listen on port and host (3)
   http.listen(config.port, config.host, () => {
       console.log(`Listening on http://${config.host}:${config.port}`);
