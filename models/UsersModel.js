@@ -2,8 +2,7 @@
 const mongoose = require('mongoose');
 
 //Define a schema
-let userSchema = mongoose.Schema;
-let SomeModelSchema = new userSchema({
+let userSchema = new mongoose.Schema({
     id: {
         type: Number,
         unique: true,
@@ -30,11 +29,25 @@ let SomeModelSchema = new userSchema({
         // enum: ["user", "admin", "superAdmin"]
     },
     password: { type: String, required: true },
+    resetLink: {
+        data: String,
+        default: ''
+    },
+    vaultData: [{
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "VaultDataModel"
+    }],
     address: [{
         type: mongoose.Schema.Types.ObjectId,
-        ref: "addressModel"
-    }]
+        ref: "AddressModel"
+    }],
+    nominee: [{
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "NomineeModel"
+    }],
+    OTP: [{}],
+    verifiedOTP: []
 })
 
-let UserModel = mongoose.model('UserModel', SomeModelSchema);
+let UserModel = mongoose.model('UserModel', userSchema);
 module.exports = UserModel;

@@ -19,7 +19,7 @@ module.exports = {
             Model.findOne({ email: userObject.email }, function(err, dbData) {
                 if (!err) {
                     resolve(dbData)
-                    console.log("check mail", dbData);
+                        //  console.log("check mail", dbData);
                 } else {
                     reject(err)
                 }
@@ -42,75 +42,45 @@ module.exports = {
     },
     getUserLoginDetails: (Model, userObject) => {
         return new Promise(function(resolve, reject) {
-            Model.findOne({ email: userObject.email },
-                (err, dbData) => {
-                    if (err) {
-                        reject(err)
-                    } else {
-                        resolve(dbData)
-                    }
-                })
-        })
-    },
-    getUserDetails: (Model, userObject) => {
-        return new Promise(function(resolve, reject) {
-            Model.find({ email: userObject.email }, (err, dbData) => {
+            Model.findOne({ email: userObject.email }, (err, dbData) => {
                 if (err) {
                     reject(err)
                 } else {
                     resolve(dbData)
                 }
-            }).populate('animals')
+            })
         })
     },
-    updateProfile: (Model, filter, newUserObject) => {
-        console.log("filter email in dbHelper", filter);
-        console.log("update details in dbHelper", newUserObject);
+    getUserDetails: (Model, filter) => {
         return new Promise(function(resolve, reject) {
-            Model.findOneAndUpdate(filter, newUserObject, { new: true }, (err, dbData) => {
+            Model.find(filter, (err, dbData) => {
+                if (err) {
+                    reject(err)
+                } else {
+                    resolve(dbData) //.populate('vaultDataModel', 'nomineeModel')
+                }
+            }).populate('vaultData').populate('nominee')
+        })
+    },
+    updateProfile: (Model, filter, update) => {
+        console.log("filter email in dbHelper", filter);
+        console.log("update details in dbHelper", update);
+        return new Promise(function(resolve, reject) {
+            Model.findOneAndUpdate(filter, update, { new: true }, (err, dbData) => {
                 console.log("data after find method", dbData);
                 console.log("error after find method", err);
-                if (!err) {
-                    resolve(dbData)
-                    console.log("update profile details", dbData);
+                if (!err && dbData) {
+                    return resolve(dbData)
+                        //  console.log("update profile details", dbData);
                 } else {
-                    reject(err)
-                    console.log("error in update profile", err);
+                    return reject(err)
+                        // console.log("error in update profile", err);
                 }
             })
         })
 
     },
 
-    highestPrice: (Model) => {
-        try {
-            return new Promise(function(resolve, reject) {
-                Model.find({}).sort({ price: -1 }).limit(1).exec(function(err, dbData) {
-                    if (err) {
-                        reject(err)
-                    } else {
-                        resolve(dbData)
-                    }
-                })
-            })
-        } catch (err) {
-            console.log(err, "error in find method")
-        }
 
-    },
-    getAlluserDetails: (Model, filter) => {
-        try {
-            return new Promise(function(resolve, reject) {
-                Model.find(filter, function(err, dbData) {
-                    if (err) {
-                        reject(err)
-                    } else {
-                        resolve(dbData)
-                    }
-                })
-            })
-        } catch (err) {
-            console.log(err, "Error in find method")
-        }
-    }
+
 }

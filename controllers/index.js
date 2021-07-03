@@ -1,3 +1,6 @@
 module.exports = {
-    auth: require("./authControllers")
+    auth: require("./authControllers"),
+    user: require("./userControllers"),
+    password: require("./vaultDataControllers"),
+    nominee: require("./nomineeControllers")
 }

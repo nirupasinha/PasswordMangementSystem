@@ -5,7 +5,7 @@ function responseHandler(res, statusCode, msg, err, data) {
             status: 'error',
             ok: true,
             code: statusCode || 400,
-            message: err.message || "something wrong",
+            message: err.message || msg || "something wrong",
             result: {
                 err
             },
