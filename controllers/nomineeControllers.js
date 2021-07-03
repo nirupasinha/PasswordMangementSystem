@@ -163,6 +163,65 @@ module.exports = {
         })
     },
     verifyOTP: (req, res) => {
+        let { email, nomineeEmail, otpFromUser } = req.body;
+        let filter = {
+            email
+        }
+        db.getUserDetails(User, filter).then(function successResponse(dbData) {
+            if (!dbData) {
+                message = `error in getting User Details`;
+                return responseHandler(res, 404, message, err)
+            }
+            let { OTP, verifiedOTP } = dbData[0]; //extract the OTP and verifiedOTP element from dbData and zero indicate first index of dbData
+            let OTPEmails =
+                OTP.map(dataObj => //map,include,join
+                    dataObj.email
+                )
+            console.log("OTP value after map filter", OTPEmails);
+            OTP.forEach((dataObj) => {
+                let { otp, email } = dataObj;
+                if (verifiedOTP.includes(nomineeEmail)) { //check nominee email is already exist in verifiedOTP array
+                    message = `User already verified`;
+                    return responseHandler(res, 404, message, null, null)
+                }
+                if (email == nomineeEmail && otp == otpFromUser) { //if user is not verified then check nomineeEmail 
+                    if (((verifiedOTP.length + 1 / OTP.length) * 100) >= 50) {
+                        let mailOptions = {
+                            from: 'nirupasinha99@gmail.com',
+                            to: OTPEmails.join(","),
+                            subject: 'Password Reset Link',
+                            html: `<h2>Please click on given link to reset your password</h2>
+                <p>Reset password OTP (valid only for 24hrs):- vaultdata</p>`
+                        };
+                        sendEmail(mailOptions)
+                    }
+                    let update = {
+                        $push: {
+                            verifiedOTP: nomineeEmail
+                        }
+                    }
+                    db.updateProfile(User, filter, update).then(function successResponse(dbData) {
+
+                        message = `OTP matched and send data to nominee!!!!!`;
+                        return responseHandler(res, 200, message, null, nomineeEmail)
+
+                    }).catch(function errorResponse(err) {
+                        message = `getting error to save OTP in database`;
+                        return responseHandler(res, 400, message, err)
+                    })
+
+                } else {
+
+                }
+            })
+
+            //console.log("");
+        }).catch(function errorResponse(err) {
+            message = `Error in getting user details`;
+            return responseHandler(res, 400, message, err)
+        })
+
+
 
     }
 

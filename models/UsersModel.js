@@ -45,7 +45,8 @@ let userSchema = new mongoose.Schema({
         type: mongoose.Schema.Types.ObjectId,
         ref: "NomineeModel"
     }],
-    OTP: [{}]
+    OTP: [{}],
+    verifiedOTP: []
 })
 
 let UserModel = mongoose.model('UserModel', userSchema);
