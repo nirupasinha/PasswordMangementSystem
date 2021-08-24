@@ -4,7 +4,7 @@
   const bodyParser = require('body-parser');
   const config = require('./config/serverConfig')
   const routes = require("./routes")
-
+  const cors = require('cors')
 
   //create the instance(2)
   let app = express();
@@ -13,6 +13,7 @@
   //middleware (4)
   app.use(bodyParser.json())
   app.use(bodyParser.urlencoded({ extended: true }), );
+  app.use(cors())
   routes.appRoutes(app);
 
 

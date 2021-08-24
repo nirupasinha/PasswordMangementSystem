@@ -5,11 +5,14 @@ const { responseHandler } = require("../utils/responseHandler")
 const bcrypt = require("../utils/bcrypt")
 const { jwt } = require("../middleware");
 const { mailHelper: { mailHelper: sendEmail } } = require("../middleware") //call nested object and rename in object destructing
+const { v4: uuidv4 } = require('uuid');
+
 module.exports = {
     signup: (req, res) => {
         const userObject = req.body;
         const errors = validationResult(req);
         const emailId = userObject.email;
+        userObject.id = uuidv4();
         console.log(errors);
         db.checkEmail(User, userObject).then(function successResponse(dbData) {
             if (!dbData) {
@@ -27,10 +30,11 @@ module.exports = {
                                 text: `Your Registration is Done .`
 
                             };
-                            sendEmail(mailOptions)
+                            // sendEmail(mailOptions)
                             const message = "Users  Registered Successfully";
                             responseHandler(res, 200, message, null, dbData)
                         }).catch(function errorResponse(err) {
+                            console.log("Errror ===>>> ",err)
                             const message = "Server Error";
                             responseHandler(res, 500, message, err)
                         })
@@ -39,7 +43,7 @@ module.exports = {
 
             } else {
                 const message = "Users already Registered";
-                responseHandler(res, 200, message, null, dbData)
+                responseHandler(res, 400, message, null, dbData)
             }
 
         }).catch(function errorResponse(err) {
