@@ -66,7 +66,7 @@ module.exports = {
                     if (passwordMatched == true) {
                         jwt.createJWTToken(emailId, userRole).then(function successCreate(createdToken) {
                             let message = `User Login Successfully with token created `;
-                            return responseHandler(res, 500, message, null, createdToken);
+                            return responseHandler(res, 200, message, null, createdToken);
                         }).catch(function errorCreateToken(err) {
                             let message = `error in token generation`;
                             return responseHandler(res, 500, message, err);
